@@ -63261,8 +63261,15 @@ ${libraryList}
             renderLoginOverlay();
           }
         } else {
-          // 未登录：显示登录框
-          renderLoginOverlay();
+          try {
+            // 已登录：直接初始化数据库并启动，不显示登录框
+            initDatabase(savedUid);
+            init();
+          } catch (e) {
+            console.error("自动登录出错，重置状态:", e);
+            localStorage.removeItem("ephone_saved_uid");
+            renderLoginOverlay();
+          }
         }
 
         // ==========================================
