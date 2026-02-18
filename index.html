@@ -63218,7 +63218,19 @@ ${libraryList}
               // 启动 App
               init();
             } else {
-             // 启动 App
+            
+              // 初始化数据库 (使用 uid 作为数据库标识)
+              initDatabase(uid);
+
+              // 移除遮罩动画
+              const overlay = document.getElementById("login-overlay");
+              if (overlay) {
+                overlay.style.transition = "opacity 0.5s ease";
+                overlay.style.opacity = "0";
+                setTimeout(() => overlay.remove(), 500);
+              }
+
+              // 启动 App
               init();
             }
           }
