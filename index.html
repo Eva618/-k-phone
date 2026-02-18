@@ -63218,27 +63218,7 @@ ${libraryList}
               // 启动 App
               init();
             } else {
-             // --- 验证成功 ---
-              msgEl.style.color = "#32d74b"; // 绿色成功
-              msgEl.textContent = "验证通过，正在进入...";
-
-              // 保存登录状态
-              localStorage.setItem("ephone_saved_uid", uid);
-              // 同时保存你的新验证标记
-              localStorage.setItem("ephone_auth", "true");
-
-              // 初始化数据库 (使用 uid 作为数据库标识)
-              initDatabase(uid);
-
-              // 移除遮罩动画
-              const overlay = document.getElementById("login-overlay");
-              if (overlay) {
-                overlay.style.transition = "opacity 0.5s ease";
-                overlay.style.opacity = "0";
-                setTimeout(() => overlay.remove(), 500);
-              }
-
-              // 启动 App
+             // 启动 App
               init();
             }
           }
