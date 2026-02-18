@@ -63219,27 +63219,25 @@ ${libraryList}
               // 启动 App
               init();
             } else {
-              // --- 验证失败 (业务逻辑拒绝，如密码错误) ---
-              throw new Error(data.message || "账号或密码错误");
-            }
-          } catch (error) {
-            // --- 错误处理 ---
-            console.error("登录出错:", error);
-            msgEl.style.color = "#ff453a"; // 红色警告
-            // 显示具体错误信息，如果是网络错误显示"网络连接失败"
-            msgEl.textContent = error.message.includes("fetch")
-              ? "网络连接失败"
-              : error.message || "验证失败";
+              // --- 验证成功 ---
+              msgEl.style.color = "#32d74b"; // 绿色成功
+              msgEl.textContent = "验证通过，正在进入...";
 
-            // 按钮视觉反馈 (变红一下)
-            if (submitBtn) {
-              const originalBg = submitBtn.style.background;
-              submitBtn.style.background = "#ff453a";
-              setTimeout(
-                () => (submitBtn.style.background = originalBg || ""),
-                500,
-              );
-              submitBtn.disabled = false; // 恢复按钮可用
+              // 保存登录状态
+              localStorage.setItem("ephone_saved_uid", uid);
+              // 同时保存你的新验证标记
+              localStorage.setItem("ephone_auth", "true");
+
+              // 初始化数据库 (使用 uid 作为数据库标识)
+              initDatabase(uid);
+
+              // 移除遮罩动画
+              const overlay = document.getElementById("login-overlay");
+              if (overlay) {
+                overlay.style.transition = "opacity 0.5s ease";
+                overlay.style.opacity = "0";
+                setTimeout(() => overlay.remove(), 500);
+              }
             }
           }
         }
